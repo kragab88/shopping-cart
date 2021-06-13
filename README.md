@@ -1,32 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-	 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js"></script>
-    </head>
-	 
-<body>
- <pre><code class="language-mermaid">graph LR
-A--&gt;B
-</code></pre>
-
-<div class="mermaid">graph LR
-A--&gt;B
-</div>
-	
-</body>
-<script>
-var config = {
-    startOnLoad:true,
-    theme: 'forest',
-    flowchart:{
-            useMaxWidth:false,
-            htmlLabels:true
-        }
-};
-mermaid.initialize(config);
-window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
-</script>
-
 # Shopping Cart Challenge
 Shopping cart is a spring-boot rest APIs provide services:
 * Authontication
@@ -72,25 +43,7 @@ The project has two components one for the shopping cart logic and another secur
 Find implementation in .\src\main\java\com\atlavik\shoppingcart\security
  
 #### User database tables
-
-```mermaid
-erDiagram
-
-cart_user ||--o{ user_role :has
-cart_user {
-int user_id
-int role_id
-}
-user_role }o--|| role : has
-user_role {
-int orderNumber
-string deliveryAddress
-}
-role {
-int role_id
-string role
-}
-```
+![enter image description here](https://github.com/kragab88/shopping-cart/blob/main/img/security_erd.PNG)
 
 
 # Synchronization
@@ -206,4 +159,3 @@ A --> C(Round Rect)
 B --> Dxxx{Rhombus}
 C --> D
 ```
-</html>
