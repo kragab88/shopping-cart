@@ -96,7 +96,9 @@ Inquire for cart using the username for the logged-in user.
 
 **Create user cart**
 Create a new cart for the logged-in user:
+
 *The user can only have one cart.*
+
 POST   [/v1/api/carts](http://localhost:8080/swagger-ui.html#/operations/cart-controller/addCartUsingPOST)
 
 **Get products for a cart using cartId**
