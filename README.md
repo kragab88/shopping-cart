@@ -73,7 +73,7 @@ request header contains header
 
 ### Shopping Cart Component
 
-#### User database tables
+#### Cart database tables
 ![enter image description here](https://github.com/kragab88/shopping-cart/blob/main/img/security_erd.PNG)
 
 predefined products created using flyway script
