@@ -2,7 +2,6 @@ package com.atlavik.shoppingcart.security;
 
 import com.atlavik.shoppingcart.security.filter.TokenFilter;
 import com.atlavik.shoppingcart.security.service.CartUserDetailsServiceImpl;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -19,8 +18,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.security.Security;
 
 @Configuration
 @EnableWebSecurity
@@ -91,6 +88,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        System.out.println("Password: "+new BCryptPasswordEncoder().encode("password"));
+        System.out.println("Password: " + new BCryptPasswordEncoder().encode("password"));
     }
 }

@@ -8,10 +8,12 @@ import com.atlavik.shoppingcart.model.Product;
 import com.atlavik.shoppingcart.repository.CartRepository;
 import com.atlavik.shoppingcart.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,6 +25,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -43,8 +46,7 @@ public class CartProductServiceTest {
     ProductRepository productRepository;
 
 
-
-    public  Cart getCartEntity() {
+    public Cart getCartEntity() {
 
         List<Product> products = new ArrayList<>();
         Product p1 = new Product();
@@ -60,13 +62,13 @@ public class CartProductServiceTest {
         products.add(p2);
         Cart cart = new Cart();
         cart.setId(UUID.fromString(CART_ID));
-         cart.setProducts(products);
-         return cart;
+        cart.setProducts(products);
+        return cart;
     }
 
     @BeforeEach
-    public  void setupCartRepository() {
-        Mockito.when(cartRepository.findByIdAndUsername(CART_ID,"user1"))
+    public void setupCartRepository() {
+        Mockito.when(cartRepository.findByIdAndUsername(CART_ID, "user1"))
                 .thenReturn(java.util.Optional.of(getCartEntity()));
         Mockito.when(cartRepository.save(org.mockito.ArgumentMatchers.any(Cart.class))).thenAnswer(new Answer<Cart>() {
             @Override
@@ -79,7 +81,7 @@ public class CartProductServiceTest {
     }
 
     @BeforeEach
-    public  void setupProductRepository() {
+    public void setupProductRepository() {
         Product p1 = new Product();
         p1.setId(UUID.fromString(PRODUCT_REPOSITORY_ID));
         p1.setDescription("Phone");
@@ -99,7 +101,7 @@ public class CartProductServiceTest {
     @DisplayName("Return list of products using username and existing cart Id")
     public void getProducts_shouldReturn_ListOfProducts() throws CartNotFoundException {
 
-        Assertions.assertThat(cartService.getCartProducts("user1",CART_ID).size()).isEqualTo(2);
+        Assertions.assertThat(cartService.getCartProducts("user1", CART_ID).size()).isEqualTo(2);
     }
 
     @Test
@@ -107,7 +109,7 @@ public class CartProductServiceTest {
     public void getProducts_shouldThrow_NoCartFound_NoCartForThatUser() {
 
         try {
-            cartService.getCartProducts("user2",CART_ID);
+            cartService.getCartProducts("user2", CART_ID);
             Assertions.fail("Should throw an exception: Cart not found ");
         } catch (Exception e) {
             Assertions.assertThat(e)
@@ -135,7 +137,7 @@ public class CartProductServiceTest {
     public void addProduct_shouldAddProduct() throws CartNotFoundException, ProductAlreadyAddedException, ProductNotFoundException {
         Product p = new Product();
         p.setId(UUID.fromString(PRODUCT_REPOSITORY_ID));
-        List<Product> products = cartService.addCartProduct("user1",CART_ID,PRODUCT_REPOSITORY_ID).getProducts();
+        List<Product> products = cartService.addCartProduct("user1", CART_ID, PRODUCT_REPOSITORY_ID).getProducts();
         Assertions.assertThat(products).contains(p);
         Assertions.assertThat(products.get(0).getDescription()).isEqualTo("Phone");
     }
@@ -145,7 +147,7 @@ public class CartProductServiceTest {
     public void addProduct_shouldThrow_NoProductFound_NoProductWithThatID() {
 
         try {
-            cartService.addCartProduct("user1",CART_ID,"20873897-0iier0-0wei");
+            cartService.addCartProduct("user1", CART_ID, "20873897-0iier0-0wei");
             Assertions.fail("Should throw an exception: Product not found ");
         } catch (Exception e) {
             Assertions.assertThat(e)
@@ -158,7 +160,7 @@ public class CartProductServiceTest {
     @DisplayName("Try to add product to cart however cart not found")
     public void addProduct_shouldThrow_CartNotFound_TryToAddProductToNotFoundCart() {
         try {
-            cartService.addCartProduct("user1","20873897-0iier0-0wei",PRODUCT_REPOSITORY_ID);
+            cartService.addCartProduct("user1", "20873897-0iier0-0wei", PRODUCT_REPOSITORY_ID);
             Assertions.fail("Should throw an exception: Cart not found ");
         } catch (Exception e) {
             Assertions.assertThat(e)
@@ -171,7 +173,7 @@ public class CartProductServiceTest {
     @DisplayName("Try to add product however the product already added")
     public void addProduct_shouldThrow_ProductAlreadyAdded_TryToExistingProduct() {
         try {
-            cartService.addCartProduct("user1",CART_ID,PRODUCT_CART_2_ID);
+            cartService.addCartProduct("user1", CART_ID, PRODUCT_CART_2_ID);
             Assertions.fail("Should throw an exception: The product already added");
         } catch (Exception e) {
             Assertions.assertThat(e)
@@ -186,7 +188,7 @@ public class CartProductServiceTest {
     public void removeProduct_shouldRemoveProduct() throws CartNotFoundException, ProductNotFoundException {
         Product p = new Product();
         p.setId(UUID.fromString(PRODUCT_CART_1_ID));
-        Assertions.assertThat(cartService.removeCartProduct("user1",CART_ID,PRODUCT_CART_1_ID).getProducts()).doesNotContain(p);
+        Assertions.assertThat(cartService.removeCartProduct("user1", CART_ID, PRODUCT_CART_1_ID).getProducts()).doesNotContain(p);
     }
 
     @Test
@@ -194,7 +196,7 @@ public class CartProductServiceTest {
     public void removeProduct_shouldThrow_NoProductFound_NoProductWithThatIDAddedToCart() {
 
         try {
-            cartService.removeCartProduct("user1",CART_ID,PRODUCT_REPOSITORY_ID);
+            cartService.removeCartProduct("user1", CART_ID, PRODUCT_REPOSITORY_ID);
             Assertions.fail("Should throw an exception: Product not found ");
         } catch (Exception e) {
             Assertions.assertThat(e)
@@ -207,7 +209,7 @@ public class CartProductServiceTest {
     @DisplayName("Try to remove product from cart however cart not found")
     public void removeProduct_shouldThrow_CartNotFound_TryToRemoveProductWhileCartNotFound() {
         try {
-            cartService.addCartProduct("user1","20873897-0iier0-0wei",PRODUCT_CART_1_ID);
+            cartService.addCartProduct("user1", "20873897-0iier0-0wei", PRODUCT_CART_1_ID);
             Assertions.fail("Should throw an exception: Cart not found ");
         } catch (Exception e) {
             Assertions.assertThat(e)
@@ -221,7 +223,7 @@ public class CartProductServiceTest {
     public void removeProduct_shouldThrow_NoProductFound_NoProductWithThatID() {
 
         try {
-            cartService.removeCartProduct("user1",CART_ID,"8400000-8cf0-11bd-b23e-6666699");
+            cartService.removeCartProduct("user1", CART_ID, "8400000-8cf0-11bd-b23e-6666699");
             Assertions.fail("Should throw an exception: Product not found ");
         } catch (Exception e) {
             Assertions.assertThat(e)
@@ -236,7 +238,7 @@ public class CartProductServiceTest {
     public void removeProduct_shouldThrow_NumberFormatException_InvalidUUID() {
 
         try {
-            cartService.removeCartProduct("user1",CART_ID,"8400000-8cf0-11bd-b23e-errtre");
+            cartService.removeCartProduct("user1", CART_ID, "8400000-8cf0-11bd-b23e-errtre");
             Assertions.fail("Should throw an exception: NumberFormatException");
         } catch (Exception e) {
             Assertions.assertThat(e)

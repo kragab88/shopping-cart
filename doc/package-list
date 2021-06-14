@@ -1,0 +1,17 @@
+com.atlavik.shoppingcart
+com.atlavik.shoppingcart.controller
+com.atlavik.shoppingcart.error
+com.atlavik.shoppingcart.exception
+com.atlavik.shoppingcart.model
+com.atlavik.shoppingcart.repository
+com.atlavik.shoppingcart.security
+com.atlavik.shoppingcart.security.controller
+com.atlavik.shoppingcart.security.enitity
+com.atlavik.shoppingcart.security.error
+com.atlavik.shoppingcart.security.exception
+com.atlavik.shoppingcart.security.filter
+com.atlavik.shoppingcart.security.repository
+com.atlavik.shoppingcart.security.service
+com.atlavik.shoppingcart.security.utils
+com.atlavik.shoppingcart.service
+com.atlavik.shoppingcart.validator

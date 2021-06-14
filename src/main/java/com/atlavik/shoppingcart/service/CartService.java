@@ -8,6 +8,6 @@ import javax.validation.Valid;
 public interface CartService {
     public Cart getUserCart(String username) throws CartNotFoundException;
 
-    public Cart addUserCart( @Valid Cart cart) ;
+    public Cart addUserCart(@Valid Cart cart);
 
 }

@@ -10,7 +10,7 @@ import java.util.Base64;
 public class BasicAuthUtil {
 
 
-    public  String[] getUserNameAndPasswordFromBasicAuth(String authorization){
+    public String[] getUserNameAndPasswordFromBasicAuth(String authorization) {
         String[] values = null;
         try {
             if (authorization != null && authorization.toLowerCase().startsWith("basic")) {
@@ -21,7 +21,7 @@ public class BasicAuthUtil {
                 // credentials = username:password
                 values = credentials.split(":", 2);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new InvalidAuthHeaderException(e);
         }
         return values;

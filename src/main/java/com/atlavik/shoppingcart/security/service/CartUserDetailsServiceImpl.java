@@ -9,7 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +20,11 @@ import java.util.Set;
 public class CartUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-     UserRepository userRepository;
+    UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-         User user = userRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(username)
@@ -44,9 +43,9 @@ public class CartUserDetailsServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> setAuths = new HashSet<>();
         // add user's authorities
         if (userRoles != null)
-        for (Role userRole : userRoles) {
-            setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
-        }
+            for (Role userRole : userRoles) {
+                setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
+            }
         return new ArrayList<>(setAuths);
     }
 

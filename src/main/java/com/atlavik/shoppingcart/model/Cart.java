@@ -25,17 +25,16 @@ public class Cart {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
-    @Type(type="pg-uuid")
+    @Type(type = "pg-uuid")
     private UUID id;
 
 
-
-    @Column(nullable = false,unique = true,length = 3)
+    @Column(nullable = false, unique = true, length = 3)
     @NotEmpty(message = "Currency cannot be empty")
-    @Length(max = 3,min = 3,message = "Currency is invalid")
+    @Length(max = 3, min = 3, message = "Currency is invalid")
     private String currency;
 
-    @Column(nullable = false,unique = true,length = 2)
+    @Column(nullable = false, unique = true, length = 2)
     @NotEmpty(message = "Country Code cannot be empty")
     @Length(max = 2, min = 2, message = "Country Code is invalid")
     private String countryCode;
@@ -48,7 +47,7 @@ public class Cart {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     @JsonIgnore
     @UniqueUsername
     private String username;

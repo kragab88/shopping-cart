@@ -12,7 +12,7 @@ import javax.naming.AuthenticationException;
 @ControllerAdvice
 public class AuthenticationErrorHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ AuthenticationException.class })
+    @ExceptionHandler({AuthenticationException.class})
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
             AuthenticationException ex, WebRequest request) {
         return new ResponseEntity(ex.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);

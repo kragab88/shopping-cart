@@ -68,9 +68,9 @@ public class JwtTokenServiceImpl implements TokenService {
     }
 
 
-    private boolean isValidUserName(String tokenUserName, String userName){
+    private boolean isValidUserName(String tokenUserName, String userName) {
         if (tokenUserName == null)
-        return false;
+            return false;
         return tokenUserName.equals(userName);
     }
 

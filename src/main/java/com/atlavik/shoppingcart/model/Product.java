@@ -8,7 +8,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,7 +18,7 @@ public class Product {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
-    @Type(type="pg-uuid")
+    @Type(type = "pg-uuid")
     private UUID id;
 
     @Column(nullable = false,
@@ -61,7 +60,6 @@ public class Product {
     }
 
 
-
     public String getDescription() {
         return description;
     }
@@ -96,6 +94,6 @@ public class Product {
         if (obj.getClass() != this.getClass()) {
             return false;
         }
-        return ((Product)obj).getId().equals(this.getId());
+        return ((Product) obj).getId().equals(this.getId());
     }
 }

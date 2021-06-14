@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -68,10 +66,11 @@ public class ProductControllerTest {
 
         Mockito.when(productService.getAllProducts()).thenReturn(products);
         ResponseEntity<List<Product>> response = restTemplate.exchange(url, HttpMethod.GET,
-                null, new ParameterizedTypeReference<List<Product>>() {});
+                null, new ParameterizedTypeReference<List<Product>>() {
+                });
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
         Assertions.assertThat((List<Product>) response.getBody()).isInstanceOf(List.class);
-        List<Product>responseBody = (List<Product>) response.getBody();
+        List<Product> responseBody = (List<Product>) response.getBody();
 
         Assertions.assertThat(responseBody.size()).isEqualTo(2);
         Assertions.assertThat(responseBody.get(0).getDescription()).isEqualTo("Phone");
@@ -83,8 +82,9 @@ public class ProductControllerTest {
     public void getAllProducts_ShouldReturn_NoProductsFound() {
         Mockito.when(productService.getAllProducts()).thenReturn(new ArrayList<>());
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET,
-                null, new ParameterizedTypeReference<String>() {});
+                null, new ParameterizedTypeReference<String>() {
+                });
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
-        Assertions.assertThat( (String) response.getBody()).isEqualTo("No Products found");
+        Assertions.assertThat((String) response.getBody()).isEqualTo("No Products found");
     }
 }

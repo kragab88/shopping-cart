@@ -18,7 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableTransactionManagement
 @EnableJpaAuditing
-public class ShoppingCartApplication  {
+public class ShoppingCartApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ShoppingCartApplication.class, args);

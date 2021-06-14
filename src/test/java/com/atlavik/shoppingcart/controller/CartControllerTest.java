@@ -25,8 +25,10 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
@@ -67,13 +69,13 @@ public class CartControllerTest {
     }
 
 
-
     @Test
     @DisplayName("Get user cart for anonymous user")
     public void getCart_ShouldReturn_NotAuthorizedUser() {
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET,
-                null, new ParameterizedTypeReference<String>() {});
+                null, new ParameterizedTypeReference<String>() {
+                });
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.UNAUTHORIZED);
     }
 
@@ -85,7 +87,8 @@ public class CartControllerTest {
         cart.setId(UUID.fromString("8400000-8cf0-11bd-b23e-6666699"));
         Mockito.when(cartService.getUserCart("user1")).thenReturn(cart);
         ResponseEntity<Cart> response = restTemplate.exchange(url, HttpMethod.GET,
-                null, new ParameterizedTypeReference<Cart>() {});
+                null, new ParameterizedTypeReference<Cart>() {
+                });
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
         Assertions.assertThat(((Cart) response.getBody()).getId()).isEqualByComparingTo(UUID.fromString("8400000-8cf0-11bd-b23e-6666699"));
     }
@@ -109,7 +112,8 @@ public class CartControllerTest {
                 }));
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET,
-                null, new ParameterizedTypeReference<String>() {});
+                null, new ParameterizedTypeReference<String>() {
+                });
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.UNAUTHORIZED);
     }
 
@@ -119,8 +123,9 @@ public class CartControllerTest {
     public void getCart_ShouldReturn_noCarts() throws CartNotFoundException {
         restTemplate = getUser1ValidTokenTemplate();
         Mockito.when(cartService.getUserCart("user1")).thenThrow(new CartNotFoundException());
-          ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET,
-                null, new ParameterizedTypeReference<String>() {});
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET,
+                null, new ParameterizedTypeReference<String>() {
+                });
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.BAD_REQUEST);
         Assertions.assertThat((String) response.getBody()).contains("Cart not Found");
     }
@@ -132,9 +137,10 @@ public class CartControllerTest {
         Cart cart = new Cart();
         cart.setId(UUID.fromString("08400000-8cf0-11bd-b23e-000006666699"));
         Mockito.when(cartService.addUserCart(org.mockito.ArgumentMatchers.any(Cart.class))).thenReturn(cart);
-         HttpEntity<Cart> cartRequest = new HttpEntity<Cart>(cart);
+        HttpEntity<Cart> cartRequest = new HttpEntity<Cart>(cart);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST,
-                cartRequest, new ParameterizedTypeReference<String>() {});
+                cartRequest, new ParameterizedTypeReference<String>() {
+                });
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
         Assertions.assertThat(((String) response.getBody())).contains("08400000-8cf0-11bd-b23e-000006666699");
     }
@@ -147,7 +153,8 @@ public class CartControllerTest {
         Cart cart = new Cart();
         cart.setId(UUID.fromString("08400000-8cf0-11bd-b23e-000006666699"));
         Mockito.when(cartProductService.addCartProduct("user1", "08400000-8cf0-11bd-b23e-000006666699", "08400000-8cf0-11bd-b23e-000006666633")).thenReturn(cart);
-        ResponseEntity<String> response = restTemplate.exchange(url + "/{cartId}/product/{productId}", HttpMethod.PUT, null, new ParameterizedTypeReference<String>() {}, "08400000-8cf0-11bd-b23e-000006666699", "08400000-8cf0-11bd-b23e-000006666633");
+        ResponseEntity<String> response = restTemplate.exchange(url + "/{cartId}/product/{productId}", HttpMethod.PUT, null, new ParameterizedTypeReference<String>() {
+        }, "08400000-8cf0-11bd-b23e-000006666699", "08400000-8cf0-11bd-b23e-000006666633");
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
     }
 
@@ -159,7 +166,8 @@ public class CartControllerTest {
         Cart cart = new Cart();
         cart.setId(UUID.fromString("08400000-8cf0-11bd-b23e-000006666699"));
         Mockito.when(cartProductService.removeCartProduct("user1", "08400000-8cf0-11bd-b23e-000006666699", "08400000-8cf0-11bd-b23e-000006666633")).thenReturn(cart);
-        ResponseEntity<String> response = restTemplate.exchange(url + "/{cartId}/product/{productId}", HttpMethod.DELETE, null, new ParameterizedTypeReference<String>() {}, "08400000-8cf0-11bd-b23e-000006666699", "08400000-8cf0-11bd-b23e-000006666633");
+        ResponseEntity<String> response = restTemplate.exchange(url + "/{cartId}/product/{productId}", HttpMethod.DELETE, null, new ParameterizedTypeReference<String>() {
+        }, "08400000-8cf0-11bd-b23e-000006666699", "08400000-8cf0-11bd-b23e-000006666633");
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
     }
 
@@ -182,12 +190,13 @@ public class CartControllerTest {
         products.add(p2);
 
         Mockito.when(cartProductService.getCartProducts("user1", "08400000-8cf0-11bd-b23e-000006666699")).thenReturn(products);
-        ResponseEntity<List<Product>> response = restTemplate.exchange(url + "/{cartId}/product", HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {},"08400000-8cf0-11bd-b23e-000006666699");
+        ResponseEntity<List<Product>> response = restTemplate.exchange(url + "/{cartId}/product", HttpMethod.GET, null, new ParameterizedTypeReference<List<Product>>() {
+        }, "08400000-8cf0-11bd-b23e-000006666699");
         Assertions.assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
     }
 
 
-    private TestRestTemplate getUser1ValidTokenTemplate(){
+    private TestRestTemplate getUser1ValidTokenTemplate() {
         User user = new User();
         user.setUsername("user1");
         user.setActive(true);

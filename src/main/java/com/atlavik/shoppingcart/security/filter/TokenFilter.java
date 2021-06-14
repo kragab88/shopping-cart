@@ -1,7 +1,5 @@
 package com.atlavik.shoppingcart.security.filter;
 
-import com.atlavik.shoppingcart.security.exception.InvalidTokenException;
-import com.atlavik.shoppingcart.security.service.CartUserDetailsServiceImpl;
 import com.atlavik.shoppingcart.security.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,12 +53,12 @@ public class TokenFilter extends OncePerRequestFilter {
     }
 
 
-    private UsernamePasswordAuthenticationToken createUsernamePasswordAuthentication(UserDetails userDetails, HttpServletRequest httpServletRequest){
+    private UsernamePasswordAuthenticationToken createUsernamePasswordAuthentication(UserDetails userDetails, HttpServletRequest httpServletRequest) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
         usernamePasswordAuthenticationToken
                 .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-        return  usernamePasswordAuthenticationToken;
+        return usernamePasswordAuthenticationToken;
     }
 
 }

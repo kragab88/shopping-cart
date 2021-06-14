@@ -8,9 +8,6 @@ import com.atlavik.shoppingcart.model.Product;
 import com.atlavik.shoppingcart.repository.CartRepository;
 import com.atlavik.shoppingcart.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -51,7 +48,7 @@ public class CartServiceImpl implements CartService, CartProductService {
         if (cart.getProducts().contains(product))
             throw new ProductAlreadyAddedException();
         cart.getProducts().add(product);
-     return    cartRepository.save(cart);
+        return cartRepository.save(cart);
     }
 
     @Override
@@ -61,8 +58,8 @@ public class CartServiceImpl implements CartService, CartProductService {
         product.setId(UUID.fromString(productId));
         if (!cart.getProducts().contains(product))
             throw new ProductNotFoundException();
-          cart.getProducts().remove(product);
-        return   cartRepository.save(cart);
+        cart.getProducts().remove(product);
+        return cartRepository.save(cart);
     }
 
 

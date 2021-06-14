@@ -14,5 +14,5 @@ public interface CartProductService {
 
     public Cart addCartProduct(String username, String cartId, String productId) throws CartNotFoundException, ProductNotFoundException, ProductAlreadyAddedException;
 
-    public Cart removeCartProduct(String username,String cartId, String productId) throws CartNotFoundException, ProductNotFoundException;
+    public Cart removeCartProduct(String username, String cartId, String productId) throws CartNotFoundException, ProductNotFoundException;
 }

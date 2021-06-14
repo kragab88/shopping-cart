@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
 @Api
 @RestController
 @RequestMapping(value = "v1/api/products")
@@ -23,7 +24,7 @@ public class ProductController {
 
     @ApiOperation(value = "get all products")
     @GetMapping(produces = "application/json")
-    public ResponseEntity getAllProducts(){
+    public ResponseEntity getAllProducts() {
         List<Product> products = productService.getAllProducts();
         if (products != null && products.size() > 0)
             return new ResponseEntity(products, HttpStatus.OK);

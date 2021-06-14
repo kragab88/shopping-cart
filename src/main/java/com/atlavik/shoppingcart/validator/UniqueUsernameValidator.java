@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
 
     @Autowired
-   private CartRepository cartRepository;
+    private CartRepository cartRepository;
 
 
     @Override

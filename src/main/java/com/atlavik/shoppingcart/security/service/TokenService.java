@@ -15,12 +15,11 @@ public interface TokenService {
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver);
 
-    public String generateToken(UserDetails userDetails) ;
+    public String generateToken(UserDetails userDetails);
 
     public Boolean isValidToken(String token);
 
     public String resolveToken(HttpServletRequest req);
-
 
 
 }

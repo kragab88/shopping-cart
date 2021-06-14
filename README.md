@@ -66,7 +66,8 @@ API consumer should provide username and password encoded to request header. the
     curl --user user1:password http://localhost:8080/v1/api/auth
 
 URL: http://localhost:8080/v1/api/auth
-request header contains header 
+
+request header contains Authorization header 
 
 > Authorization Basic dXNlcjE6cGFzc3dvcmQ=
 

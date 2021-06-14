@@ -13,6 +13,8 @@ import java.lang.annotation.Target;
 public @interface UniqueUsername {
 
     String message() default "There is a cart already created";
-    Class<?>[] groups() default { };
-    Class<? extends Payload>[] payload() default { };
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }
