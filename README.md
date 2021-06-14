@@ -49,6 +49,7 @@ Find implementation in .\src\main\java\com\atlavik\shoppingcart\security
 ![enter image description here](https://github.com/kragab88/shopping-cart/blob/main/img/security_erd.PNG)
 
 **Predefinded users created**
+
 predefined users added with hashed password in cart_user database table using flyway scripts.
 
 |**Username**|**Password**  |
@@ -71,6 +72,7 @@ request header contains header
 
 
 ### Shopping Cart Component
+
 #### User database tables
 ![enter image description here](https://github.com/kragab88/shopping-cart/blob/main/img/security_erd.PNG)
 
@@ -81,13 +83,16 @@ predefined products created using flyway script
     insert into product (category,description,price) values ('LAPTOP','MAC AIR',44);
 
 #### REST APIs
+
 REST APIs created as below to manipulate the user cart and cart products.
 The cart services secured using Oauth2 jwt authorization the request should contain an authorization header with a valid jwt token
 
     Authorization Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImV4cCI6MTYyMzA1MDAxOSwiaWF0IjoxNjIzMDMyMDE5fQ.-nGVqmJo-VgepjxOmnwM1YAGQe0fYk2Dg94wzPT0Qp8PPxSm6-qvnjo2aiVX3EuiXWhMXcHzhHq5Jnqu87PCQg
 
 **Get user cart**
+
 Inquire for cart using the username for the logged-in user.
+
 *The user can only have one cart.*
 
     curl --location --request GET 'http://localhost:8080/v1/api/carts' \
@@ -95,6 +100,7 @@ Inquire for cart using the username for the logged-in user.
 
 
 **Create user cart**
+
 Create a new cart for the logged-in user:
 
 *The user can only have one cart.*
@@ -106,13 +112,17 @@ POST   [/v1/api/carts](http://localhost:8080/swagger-ui.html#/operations/cart-co
 GET  [/v1/api/carts/{cartId}/product](http://localhost:8080/swagger-ui.html#/operations/cart-controller/getCartProductsUsingGET)
 
 **Add product to a cart using cartId and productId**
+
 PUT [/v1/api/carts/{cartId}/product/{productId}](http://localhost:8080/swagger-ui.html#/operations/cart-controller/addCartProductUsingPUT)
 
 **Remove product from a cart using cartId and productId**
+
 DELETE [/v1/api/carts/{cartId}/product/{productId}](http://localhost:8080/swagger-ui.html#/operations/cart-controller/removeCartProductUsingDELETE)
 
 **Get all products**
+
 *The service is available for anonymous user*
+
 GET [/v1/api/products](http://localhost:8080/swagger-ui.html#/operations/product-controller/getAllProductsUsingGET)
 
 
